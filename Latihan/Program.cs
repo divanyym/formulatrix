@@ -1,35 +1,18 @@
-﻿using System; // Menggunakan namespace System untuk akses fungsi standar seperti Console.
+﻿using System;
 
-namespace Formulatrix
+namespace FormulatrixTraining
 {
-    // Struktur untuk menyimpan data pengguna
-    public struct DataPengguna
+    class Program
     {
-        public string Nama { get; }
-        public string Alamat { get; }
-        public int Umur { get; }
-        public double TinggiBadan { get; }
-        public bool Pelajar { get; }
-        public char JenisKelamin { get; }
-
-        public DataPengguna(string nama, string alamat, int umur, double tinggiBadan, bool pelajar, char jenisKelamin)
+        static void Main()
         {
-            Nama = nama;
-            Alamat = alamat;
-            Umur = umur;
-            TinggiBadan = tinggiBadan;
-            Pelajar = pelajar;
-            JenisKelamin = char.ToUpper(jenisKelamin);
-        }
+            Console.WriteLine("=== FORMULATRIX TRAINING ===");
 
-        public void TampilkanInfo()
-        {
-            Console.WriteLine($"\nNama: {Nama}");
-            Console.WriteLine($"Alamat: {Alamat}");
-            Console.WriteLine($"Umur: {Umur} tahun");
-            Console.WriteLine($"Tinggi Badan: {TinggiBadan} cm");
-            Console.WriteLine($"Pelajar: {(Pelajar ? "Ya" : "Tidak")}");
-            Console.WriteLine($"Jenis Kelamin: {JenisKelamin}");
+            const int jumlahPengguna = 3;
+            PengelolaData pengelola = new PengelolaData(jumlahPengguna);
+
+            pengelola.KumpulkanData();
+            pengelola.TampilkanSemuaData();
         }
     }
 }
