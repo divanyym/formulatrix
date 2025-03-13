@@ -2,85 +2,101 @@
 
 namespace FormulatrixTraining
 {
-    // Struct untuk menyimpan data pengguna
-    public struct UserData
+    // Struktur untuk menyimpan data pengguna
+    public struct DataPengguna
     {
-        public string Nama { get; set; }
-        public string Alamat { get; set; }
-        public int Age { get; set; }
-        public double Height { get; set; }  // Menggunakan double untuk tinggi badan
-        public bool IsStudent { get; set; } // Menggunakan bool untuk status pelajar
-        public char Gender { get; set; }    // Menggunakan char untuk jenis kelamin (L/P)
+        public string Nama { get; }
+        public string Alamat { get; }
+        public int Umur { get; }
+        public double TinggiBadan { get; }
+        public bool Pelajar { get; }
+        public char JenisKelamin { get; }
 
-        public void DisplayInfo()
+        public DataPengguna(string nama, string alamat, int umur, double tinggiBadan, bool pelajar, char jenisKelamin)
+        {
+            Nama = nama;
+            Alamat = alamat;
+            Umur = umur;
+            TinggiBadan = tinggiBadan;
+            Pelajar = pelajar;
+            JenisKelamin = char.ToUpper(jenisKelamin);
+        }
+
+        public void TampilkanInfo()
         {
             Console.WriteLine($"\nNama: {Nama}");
             Console.WriteLine($"Alamat: {Alamat}");
-            Console.WriteLine($"Umur: {Age} tahun");
-            Console.WriteLine($"Tinggi Badan: {Height} cm");
-            Console.WriteLine($"Pelajar: {(IsStudent ? "Ya" : "Tidak")}");
-            Console.WriteLine($"Jenis Kelamin: {Gender}");
+            Console.WriteLine($"Umur: {Umur} tahun");
+            Console.WriteLine($"Tinggi Badan: {TinggiBadan} cm");
+            Console.WriteLine($"Pelajar: {(Pelajar ? "Ya" : "Tidak")}");
+            Console.WriteLine($"Jenis Kelamin: {JenisKelamin}");
         }
     }
 
-    class UserDataProcessor
+    class PengelolaData
     {
-        private UserData[] _users;
+        private readonly DataPengguna[] _pengguna;
 
-        public UserDataProcessor(int totalUsers)
+        public PengelolaData(int jumlahPengguna)
         {
-            _users = new UserData[totalUsers];
+            _pengguna = new DataPengguna[jumlahPengguna];
         }
 
-        public void CollectUserData()
+        public void KumpulkanData()
         {
-            for (int i = 0; i < _users.Length; i++)
+            for (int i = 0; i < _pengguna.Length; i++)
             {
                 Console.WriteLine($"\nData ke-{i + 1}:");
 
-                Console.Write("Nama: ");
-                _users[i].Nama = Console.ReadLine() ?? "Tidak diketahui";
+                string nama = InputString("Nama");
+                string alamat = InputString("Alamat");
+                int umur = InputInt("Umur");
+                double tinggi = InputDouble("Tinggi Badan (cm)");
+                bool pelajar = InputBool("Apakah Anda seorang pelajar? (true/false)");
+                char jenisKelamin = InputChar("Jenis Kelamin (L/P)");
 
-                Console.Write("Alamat: ");
-                _users[i].Alamat = Console.ReadLine() ?? "Tidak diketahui";
-
-                Console.Write("Umur: ");
-                if (!int.TryParse(Console.ReadLine(), out int age))
-                {
-                    age = 0; // Default jika input salah
-                }
-                _users[i].Age = age;
-
-                Console.Write("Tinggi Badan (cm): ");
-                if (!double.TryParse(Console.ReadLine(), out double height))
-                {
-                    height = 0.0; // Default jika input salah
-                }
-                _users[i].Height = height;
-
-                Console.Write("Apakah Anda seorang pelajar? (true/false): ");
-                if (!bool.TryParse(Console.ReadLine(), out bool isStudent))
-                {
-                    isStudent = false; // Default jika input salah
-                }
-                _users[i].IsStudent = isStudent;
-
-                Console.Write("Jenis Kelamin (L/P): ");
-                char gender = Console.ReadKey().KeyChar;
-                _users[i].Gender = char.ToUpper(gender); // Mengonversi ke huruf besar
-
-                Console.WriteLine(); // Pindah baris setelah input char
+                _pengguna[i] = new DataPengguna(nama, alamat, umur, tinggi, pelajar, jenisKelamin);
             }
         }
 
-        public void DisplayAllUserData()
+        public void TampilkanSemuaData()
         {
             Console.WriteLine("\n=== DATA TELAH TERSIMPAN ===");
-            for (int i = 0; i < _users.Length; i++)
+            foreach (var pengguna in _pengguna)
             {
-                Console.WriteLine($"\nData ke-{i + 1}:");
-                _users[i].DisplayInfo();
+                pengguna.TampilkanInfo();
             }
+        }
+
+        // Metode tambahan untuk validasi input
+        private static string InputString(string prompt)
+        {
+            Console.Write($"{prompt}: ");
+            return Console.ReadLine() ?? "Tidak diketahui";
+        }
+
+        private static int InputInt(string prompt)
+        {
+            Console.Write($"{prompt}: ");
+            return int.TryParse(Console.ReadLine(), out int nilai) ? nilai : 0;
+        }
+
+        private static double InputDouble(string prompt)
+        {
+            Console.Write($"{prompt}: ");
+            return double.TryParse(Console.ReadLine(), out double nilai) ? nilai : 0.0;
+        }
+
+        private static bool InputBool(string prompt)
+        {
+            Console.Write($"{prompt}: ");
+            return bool.TryParse(Console.ReadLine(), out bool nilai) && nilai;
+        }
+
+        private static char InputChar(string prompt)
+        {
+            Console.Write($"{prompt}: ");
+            return char.ToUpper(Console.ReadKey().KeyChar);
         }
     }
 
@@ -90,11 +106,11 @@ namespace FormulatrixTraining
         {
             Console.WriteLine("=== FORMULATRIX TRAINING ===");
 
-            const int totalUsers = 3;
-            UserDataProcessor processor = new UserDataProcessor(totalUsers);
+            const int jumlahPengguna = 3;
+            PengelolaData pengelola = new PengelolaData(jumlahPengguna);
 
-            processor.CollectUserData();
-            processor.DisplayAllUserData();
+            pengelola.KumpulkanData();
+            pengelola.TampilkanSemuaData();
         }
     }
 }
