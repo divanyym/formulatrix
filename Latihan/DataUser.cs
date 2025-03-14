@@ -1,31 +1,21 @@
-using System;
-
 namespace Formulatrix
 {
-    public struct DataUser
+    public class DataUser : UserBase
     {
-        public string Name { get; }
-        public string Address { get; }
-        public int Age { get; }
-        public double Height { get; }
-        public bool Intern { get; }
-        public char Gender { get; }
+        public static int UserCount { get; private set; } = 0; // Static property untuk melacak jumlah user
 
         public DataUser(string name, string address, int age, double height, bool intern, char gender)
+            : base(name, address, age, height, intern, gender)
         {
-            Name = name;
-            Address = address;
-            Age = age;
-            Height = height;
-            Intern = intern;
-            Gender = char.ToUpper(gender);
+            UserCount++; // Increment setiap instance dibuat
         }
 
-        public void ShowInfo()
+
+        public override void ShowInfo()
         {
             Console.WriteLine($"\nName: {Name}");
             Console.WriteLine($"Address: {Address}");
-            Console.WriteLine($"Umur: {Age} tahun");
+            Console.WriteLine($"Age: {Age} tahun");
             Console.WriteLine($"Height: {Height} cm");
             Console.WriteLine($"intern: {(Intern ? "Ya" : "Tidak")}");
             Console.WriteLine($"Jenis Kelamin: {Gender}");
