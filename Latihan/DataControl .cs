@@ -1,47 +1,48 @@
 using System;
 
-namespace FormulatrixTraining
+namespace Formulatrix
 {
-    public class PengelolaData
+    public class DataControl
     {
-        private readonly DataPengguna[] _pengguna;
+        private readonly DataUser[] _input;
 
-        public PengelolaData(int jumlahPengguna)
+        public DataControl(int user)
         {
-            _pengguna = new DataPengguna[jumlahPengguna];
+            _input = new DataUser[user];
         }
 
-        public void KumpulkanData()
+        public void InputData()
         {
-            for (int i = 0; i < _pengguna.Length; i++)
+            for (int i = 0; i < _input.Length; i++)
             {
                 Console.WriteLine($"\nData ke-{i + 1}:");
 
-                string nama = InputString("Nama");
-                string alamat = InputString("Alamat");
-                int umur = InputInt("Umur");
-                double tinggi = InputDouble("Tinggi Badan (cm)");
-                bool pelajar = InputBool("Apakah Anda seorang pelajar? (true/false)");
-                char jenisKelamin = InputChar("Jenis Kelamin (L/P)");
+                string name = InputString("Name");
+                string address = InputString("Address");
+                int age = InputInt("Age");
+                double height = InputDouble("Tinggi Badan (cm)");
+                bool intern = InputBool("Apakah Anda sedang intern di Formulatrix? (true/false)");
+                char gender = InputChar("Jenis Kelamin (L/P)");
 
-                _pengguna[i] = new DataPengguna(nama, alamat, umur, tinggi, pelajar, jenisKelamin);
+                _input[i] = new DataUser(name, address, age, height, intern, gender);
             }
         }
 
-        public void TampilkanSemuaData()
+        public void ShowData()
         {
             Console.WriteLine("\n=== DATA TELAH TERSIMPAN ===");
-            foreach (var pengguna in _pengguna)
+            foreach (var input in _input)
             {
-                pengguna.TampilkanInfo();
+                input.ShowInfo();
             }
         }
 
         private static string InputString(string prompt)
         {
             Console.Write($"{prompt}: ");
-            return Console.ReadLine() ?? "Tidak diketahui";
+            return Console.ReadLine() ?? "Empty";
         }
+        
 
         private static int InputInt(string prompt)
         {

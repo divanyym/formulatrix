@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FormulatrixTraining
+namespace Formulatrix
 {
     class Program
     {
@@ -8,11 +8,11 @@ namespace FormulatrixTraining
         {
             Console.WriteLine("=== FORMULATRIX TRAINING ===");
 
-            const int jumlahPengguna = 3;
-            PengelolaData pengelola = new PengelolaData(jumlahPengguna);
+            const int user = 3;
+            DataControl author = new DataControl(user);
 
-            pengelola.KumpulkanData();
-            pengelola.TampilkanSemuaData();
+            author.InputData();
+            author.ShowData();
         }
     }
 }
